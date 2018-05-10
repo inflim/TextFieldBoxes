@@ -390,7 +390,6 @@ public class TextFieldBoxes extends FrameLayout {
         this.endIconImageButton.setAlpha(0.54f);
         this.labelTopMargin = RelativeLayout.LayoutParams.class
                 .cast(this.floatingLabel.getLayoutParams()).topMargin;
-
         initOnClick();
 
         // Have to update useDenseSpacing then the dimensions before the first activation
@@ -764,9 +763,7 @@ public class TextFieldBoxes extends FrameLayout {
             }
         }
 
-        /* Don't Count Space & Line Feed */
-        int length = this.editText.getText().toString() .replaceAll(" ", "")
-                                                        .replaceAll("\n", "").length();
+        int length = this.editText.getText().toString().length();
         String lengthStr = Integer.toString(length) + " / ";
         String counterLabelResourceStr = getResources().getString(R.string.counter_label_text_constructor);
         if (this.maxCharacters > 0) {
@@ -774,7 +771,7 @@ public class TextFieldBoxes extends FrameLayout {
                 /* MAX & MIN */
                 this.counterLabel.setText(String.format(counterLabelResourceStr, lengthStr, Integer.toString(this.minCharacters), "-", Integer.toString(this.maxCharacters)));
                 if (performValidation) {
-                    if (length < this.minCharacters || length > this.maxCharacters) {
+                    if (length < this.minCharacters || length >= this.maxCharacters) {
                         setCounterError();
                     } else {
                         removeCounterError();
@@ -784,7 +781,7 @@ public class TextFieldBoxes extends FrameLayout {
                 /* MAX ONLY */
                 this.counterLabel.setText(String.format(counterLabelResourceStr, lengthStr, Integer.toString(this.maxCharacters), "", ""));
                 if (performValidation) {
-                    if (length > this.maxCharacters) {
+                    if (length >= this.maxCharacters) {
                         setCounterError();
                     } else {
                         removeCounterError();
